@@ -35,11 +35,7 @@ The Currency Exchange Web App is a web-based application that allows users to vi
    npm install
    ```
 
-3. **Create a 
-
-.env
-
- file** and add your API key:
+3. **Create a .env file** and add your API key:
    ```
    API_KEY=your_api_key_here
    ```
