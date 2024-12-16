@@ -60,6 +60,7 @@
                         <option value="currency">Search currency</option>
                         <option value="country name">Search country</option>
                       </select>
+                      <input type="hidden" name="neighbors">
                     </form>
                 </div>
             </div>
@@ -67,11 +68,11 @@
         <div class="row py-3 text-center d-flex justify-content-evenly">
                         
         <% for (let i = 0; i < neighbors.length; i++) { %>
-            <div class="card position-relative" style="width: 18rem;">
-                <form action="/delete" method="POST">
-                    <button type="submit" class="btn-close p-2 position-absolute top-0 end-0" aria-label="Close"></button>
-                    <input type="hidden" name="index" value="<%= i %>">
-                </form>
+            <div id="card<%= i %>"class="card position-relative" style="width: 18rem;">
+            
+                    <button type="submit" id="close<%= i  %>" class="btn-close p-2 position-absolute top-0 end-0" aria-label="Close"></button>
+                    
+                
                 <div class="card-body">
                     <h5 class="card-title">
                     <span class="fi fi-<%= neighbors[i].countryCode %>"></span>
@@ -115,6 +116,7 @@
                         <option selected value="currency">Search currency</option>
                         <option value="country name">Search country</option>
                       </select>
+                      <input type="hidden" name="neighbors">
                     </form>
                 </div>
             </div>

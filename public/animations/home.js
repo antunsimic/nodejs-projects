@@ -6,6 +6,13 @@ for (let i = 0; i < neighbors.length; i++) {
     $("#amount_" + i).text(formatNumber(neighbors[i].conversionRate));
 }
 
+let deletedCards = [];
+
+$(".btn-close").on("click", function(event) {
+    let index = this.id[this.id.length-1];
+    deletedCards.push(index);
+    $("#card"+index).css("display", "none");
+})
 
 
 $(".main input").on("input", function(event) {
@@ -78,3 +85,9 @@ $(".new select").on("change", function(event) {
    
 })
     
+$("form").on("submit", function(event) {
+ //   console.log("neighbors that won't show again are")
+ //   console.log(deletedCards);
+    $("form input[name='neighbors']").val(JSON.stringify(deletedCards));
+
+})
