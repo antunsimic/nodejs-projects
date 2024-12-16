@@ -1,0 +1,29 @@
+.btn.plus {
+    height: 7em;
+    width: 7em;
+ 
+
+}
+
+.card.plus {
+    border-width: 0;
+    background: none;
+}
+
+
+.card.new, .main button {
+    display: none;
+}
+
+body {
+    background-image: url("/images/money.jpg");
+    background-size: cover;
+  
+}
+
+
+#about {
+    color: white;
+    font-size: large;
+}
+
