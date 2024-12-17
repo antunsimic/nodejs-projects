@@ -76,6 +76,32 @@ var homeCountry;
 
 
 async function makeCountryFrom(id, idType) {
+  id = id.trim();
+  const edgeCases = ["ireland", "china", "korea", "america", "guinea", "samoa"];
+  if (edgeCases.includes(id.toLowerCase())) {
+    idType = "country code";
+    switch (id.toLowerCase()) {
+      case "ireland":
+        id = "ie";
+        break;
+      case "china":
+        id = "cn";
+        break;
+      case "korea":
+        id = "kr";
+        break;
+      case "america":
+        id = "us";
+        break;
+      case "guinea":
+        id = "gn";
+        break;
+      case "samoa":
+        id = "ws";
+        break;
+
+    }
+  }
 
   try {
     if (idType==="country code") {
@@ -139,6 +165,12 @@ function filterByCurrency(countries) {
   });
 }
 
+function isLocalhost(ip) {
+  return ip === '127.0.0.1' ||          // Standard IPv4 localhost
+         ip === '::1' ||                // Standard IPv6 localhost
+         ip === '::ffff:127.0.0.1' ||   // IPv6-mapped IPv4 localhost
+         ip.startsWith('::ffff:');      // General check for IPv6-mapped IPv4 addresses
+}
 
 
 async function deduceNeighbors (currency, neighbors, sharedCurrency) {
@@ -245,10 +277,11 @@ app.get("/", (req, res, next) => {
      let mockIP = "81.45.8.1" //Spain
     // let mockIP = "94.242.246.24" // Luxembourg
     // let mockIP = "200.160.2.3" // Brazil
-
-    if (req.clientIP==="::1") {
+    
+    if (isLocalhost(req.clientIP)) {
         req.clientIP = mockIP;
     }
+    
     let response = await axios.get("https://api.country.is/"+req.clientIP);
    // let response = await axios.get("https://api.country.is/");
     let countryCode = response.data.country.toLowerCase(); // actual user's country, e.g. Croatia
@@ -315,6 +348,37 @@ app.post("/update", async (req, res) => {
 
 
 });
+
+app.post("/swap", async (req, res) => {
+  
+  try {
+    let deletedNeighbors = JSON.parse(req.body.neighbors);
+
+    //swap first, then delete, otherwise the index of swapping will no longer be accurate
+    const tempCountry = homeCountry;
+    homeCountry = neighbors[Number(req.body.index)];
+    neighbors[Number(req.body.index)] = tempCountry;
+    
+    neighbors = neighbors.filter((neighbor, index) => !deletedNeighbors.includes(index.toString()));
+
+
+    const data = {
+      homeCountry: homeCountry,
+      neighbors: neighbors,
+
+    }
+    res.render("index.ejs", data);
+    
+  } catch (error) {
+    console.error("Failed to make request:", error.message);
+    res.render("index.ejs", {
+      error: error.message,
+    });
+  }
+
+
+});
+
 
 
 app.post("/add", async (req, res) => {

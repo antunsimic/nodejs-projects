@@ -70,7 +70,7 @@
         <% for (let i = 0; i < neighbors.length; i++) { %>
             <div id="card<%= i %>"class="card position-relative" style="width: 18rem;">
             
-                    <button type="submit" id="close<%= i  %>" class="btn-close p-2 position-absolute top-0 end-0" aria-label="Close"></button>
+                    <button type="button" id="close<%= i  %>" class="btn-close p-2 position-absolute top-0 end-0" aria-label="Close"></button>
                     
                 
                 <div class="card-body">
@@ -82,7 +82,13 @@
                     <h2 class="card-text"> <span id="amount_<%= i  %>"><%= neighbors[i].conversionRate  %></span> <%= neighbors[i].currencySymbol  %></h2>
                     
                 </div>
+                <form action="/swap" method="POST">
+                  <input type="hidden" name="index" value="<%= i  %>">
+                  <input type="hidden" name="neighbors">
+                </form>
             </div>
+
+
             
             <%   } %>
 

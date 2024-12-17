@@ -18,3 +18,17 @@ p, li {
     font-size: 18px;
 }
 
+.about {
+    text-align: center;
+  }
+  
+  .about ul, .about li {
+    padding: 0;
+    margin: 0;  /* all*/
+
+  }
+  
+  .about li {
+    margin: 0.5rem 0; /* top-bottom, left-right*/
+  }
+  

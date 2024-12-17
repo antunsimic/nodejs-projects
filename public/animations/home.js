@@ -14,6 +14,15 @@ $(".btn-close").on("click", function(event) {
     $("#card"+index).css("display", "none");
 })
 
+$("[id^='card']").on("click", function(event) {
+    if (event.target === this.querySelector("button")) {
+        return;
+    }
+  //  console.log("the form about to be submitted is: " + this.querySelector("form"));
+    prepareDeletedCards();
+    
+    this.querySelector("form").submit();
+});
 
 $(".main input").on("input", function(event) {
     $("#amount_main").text(formatNumber(event.target.value));
@@ -85,9 +94,9 @@ $(".new select").on("change", function(event) {
    
 })
     
-$("form").on("submit", function(event) {
- //   console.log("neighbors that won't show again are")
- //   console.log(deletedCards);
-    $("form input[name='neighbors']").val(JSON.stringify(deletedCards));
+$("form").on("submit", prepareDeletedCards);
 
-})
+function prepareDeletedCards() {
+ //   console.log("deleted cards about to be sent are: " + deletedCards)
+    $("form input[name='neighbors']").val(JSON.stringify(deletedCards));
+}

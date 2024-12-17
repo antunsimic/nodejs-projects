@@ -27,3 +27,20 @@ body {
     font-size: large;
 }
 
+/* Hover Effect */
+[id^="card"]:hover {
+    background-color: #f8f9fa;       /* Light gray background */
+    transform: translateY(-5px);     /* Slight lift effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+  }
+  
+  /* Click Effect */
+  [id^="card"]:active {
+    background-color: #e2e6ea;       /* Slightly darker gray when clicked */
+    transform: translateY(0);        /* Reset the lift effect */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  /* Slightly stronger shadow */
+  }
+
+  form[action="/swap"] {
+    display: none;
+  }
