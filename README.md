@@ -78,7 +78,7 @@ To deploy the app on Heroku, follow these steps:
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the Source-Available Commercial License (SACL) v1.0. See the LICENSE file for details.
 
 ## Author
 
