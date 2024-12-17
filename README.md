@@ -1,8 +1,8 @@
-# Currency Exchange Web App
+# Currency Exchange
 
 ## Description
 
-The Currency Exchange Web App is a web-based application that allows users to view and convert currency exchange rates. It provides real-time exchange rates for various currencies and displays information about different countries and their currencies. The app also allows users to add and remove neighboring countries to compare their exchange rates.
+_Currency Exchange_ is a web-based application that allows users to view and convert currency exchange rates. It provides real-time exchange rates for various currencies and displays information about different countries and their currencies. The app also allows users to add and remove neighboring countries to compare their exchange rates.
 
 ## Features
 
