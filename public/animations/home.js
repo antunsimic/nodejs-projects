@@ -20,20 +20,43 @@ $("[id^='card']").on("click", function(event) {
     }
   //  console.log("the form about to be submitted is: " + this.querySelector("form"));
     prepareDeletedCards();
-    
     this.querySelector("form").submit();
+        
 });
 
 $(".main input").on("input", function(event) {
-    $("#amount_main").text(formatNumber(event.target.value));
+    if ($(".main select").val() === "amount") {
+        this.value = allowOnly("numbers", this.value);
+       
+        $("#amount_main").text(formatNumber(event.target.value));
     
-    const factor = Number(event.target.value) / Number(homeCountry.conversionRate);
-    
-    for (let i = 0; i < neighbors.length; i++) {
-        const newValue = factor * Number(neighbors[i].conversionRate);
-        $("#amount_" + i).text(formatNumber(newValue));
+        const factor = Number(event.target.value) / Number(homeCountry.conversionRate);
+        
+        for (let i = 0; i < neighbors.length; i++) {
+            const newValue = factor * Number(neighbors[i].conversionRate);
+            $("#amount_" + i).text(formatNumber(newValue));
+        }
     }
+    else {
+        this.value = allowOnly("words", this.value);
+
+
+    } 
+
 });
+
+$(".new input").on("input", function (event) {
+    this.value = allowOnly("words", this.value);
+})
+
+function allowOnly(type, input) {
+    if (type==="numbers") {
+        return input.replace(/[^0-9.]/g, "");
+    }
+    else if (type==="words") {
+        return input.replace(/[^a-zA-Z ]/g, ""); 
+    }
+}
 
 // Helper function to format numbers to 2 decimal places
 function formatNumber(value) {
@@ -94,9 +117,25 @@ $(".new select").on("change", function(event) {
    
 })
     
-$("form").on("submit", prepareDeletedCards);
+$("form").on("submit", function (event) {
+   const selected = this.querySelector("select").value;
+   if (selected === "amount") {
+    event.preventDefault();
+    return;
+   }
+   const textInput = this.querySelector("input[type='text']");
+    if (textInput.value.length < 2 || textInput.value.length > 56 ) {
+        alert("Enter a proper " + selected + "!");
+        event.preventDefault();
+        return;
+    }
+    // at this point the form will be submitted, so preparation needs to be done
+    prepareDeletedCards();
+    
+});
+
 
 function prepareDeletedCards() {
- //   console.log("deleted cards about to be sent are: " + deletedCards)
     $("form input[name='neighbors']").val(JSON.stringify(deletedCards));
+
 }
