@@ -254,6 +254,13 @@ function getRepresentativeCountry(countryCode, currency) {
   }
 }
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // Random index from 0 to i
+    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+  }
+  return array;
+}
 
 app.get("/", (req, res, next) => {
  
@@ -265,19 +272,27 @@ app.get("/", (req, res, next) => {
     // figuring out where the user is from
     // let mockIP = "8.8.8.8"; // USA
     // let mockIP = "24.114.32.0"; // Canada
-    //  let mockIP = "101.6.6.6"; // China
-    // let mockIP = "84.0.0.0"; // Hungary
+     // let mockIP = "101.6.6.6"; // China
+   //  let mockIP = "84.0.0.0"; // Hungary
     // let mockIP = "51.140.0.0"; // UK
-   //  let mockIP = "203.135.0.1" //Pakistan
+    // let mockIP = "203.135.0.1" //Pakistan
+    // let mockIP = "95.165.0.1" // Russia
     // let mockIP = "1.1.1.1" //Australia
-    // let mocKIP = "41.233.53.5" //Egypt
+    // let mockIP = "41.233.53.5" //Egypt
     // let mockIP = "82.81.166.1" // Israel
    //  let mockIP = "85.96.200.1" // Turkey
    //  let mockIP = "213.7.169.1" // Cyprus
-     let mockIP = "81.45.8.1" //Spain
+   //  let mockIP = "81.45.8.1" //Spain
     // let mockIP = "94.242.246.24" // Luxembourg
-    // let mockIP = "200.160.2.3" // Brazil
-    
+     let mockIP = "200.160.2.3" // Brazil
+    // let mocKIP = "82.220.34.100" // Swizerland
+    // let mockIP = "41.243.7.110" // the DRC
+    // let mockIP = "37.156.28.1" // Iran
+  //   let mockIP = "188.48.73.12" // Saudi Arabia
+   //  let mockIP = "77.46.158.100" // Serbia
+    // let mockIP = "91.203.5.10" // Ukraine
+   //  let mockIP = "41.107.8.56" // Algeria
+
     if (isLocalhost(req.clientIP)) {
         req.clientIP = mockIP;
     }
@@ -298,7 +313,7 @@ app.get("/", (req, res, next) => {
     }
     //console.log(countriesWithSharedCurrency);
    
-    neighbors = await deduceNeighbors(homeCountry.currencyCode, homeCountry.borders, countriesWithSharedCurrency); //neighbors of user's actual country are sent
+    neighbors = await deduceNeighbors(homeCountry.currencyCode, shuffleArray(homeCountry.borders), countriesWithSharedCurrency); //neighbors of user's actual country are sent
     
     //console.log(neighbors);
 
