@@ -16,11 +16,9 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use(methodOverride((req, res) => {
   if ('_method' in req.body) {
-    console.log("overriding this POST request with " + req.body._method);
     return req.body._method;
   }
   else {
-    console.log("this request remains POST");
   return "POST";
 }
 }));
@@ -84,10 +82,8 @@ const globalPlayers = [];
 var neighbors = [];
 var homeCountry;
 
-
-async function makeCountryFrom(id, idType) {
-  id = id.trim();
-  const edgeCases = ["ireland", "china", "korea", "america", "guinea", "samoa"];
+function fixEdgeCases(id, idType) {
+  const edgeCases = ["ireland", "china", "korea", "america", "guinea", "samoa", "georgia"];
   if (edgeCases.includes(id.toLowerCase())) {
     idType = "country code";
     switch (id.toLowerCase()) {
@@ -109,10 +105,20 @@ async function makeCountryFrom(id, idType) {
       case "samoa":
         id = "ws";
         break;
+      case "georgia":
+        id = "ge";
+        break;
 
     }
   }
+  return [id, idType];
 
+}
+
+async function makeCountryFrom(id, idType) {
+  id = id.trim();
+  id = id.toLowerCase();
+  [id, idType] = fixEdgeCases(id, idType);
   try {
     if (idType==="country code") {
       const response = await axios.get("https://restcountries.com/v3.1/alpha/"+id);
