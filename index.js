@@ -1,7 +1,7 @@
 import express from "express";
 import axios from "axios";
 import 'dotenv/config'
-
+import methodOverride from "method-override";
 
 const app = express();
 
@@ -14,6 +14,16 @@ if (port == null || port == "") {
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
+app.use(methodOverride((req, res) => {
+  if ('_method' in req.body) {
+    console.log("overriding this POST request with " + req.body._method);
+    return req.body._method;
+  }
+  else {
+    console.log("this request remains POST");
+  return "POST";
+}
+}));
 
 
 
@@ -338,7 +348,7 @@ app.get("/", (req, res, next) => {
 });
 
 
-app.post("/update", async (req, res) => {
+app.put("/update", async (req, res) => {
   
   try {
     let deletedNeighbors = JSON.parse(req.body.neighbors);
@@ -364,7 +374,7 @@ app.post("/update", async (req, res) => {
 
 });
 
-app.post("/swap", async (req, res) => {
+app.patch("/swap", async (req, res) => {
   
   try {
     let deletedNeighbors = JSON.parse(req.body.neighbors);

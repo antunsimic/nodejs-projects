@@ -51,6 +51,7 @@
                     </h5>
                     <h2 class="card-text"> <span id="amount_main"> <%= homeCountry.conversionRate  %></span> <%= homeCountry.currencySymbol  %></h2>
                     <form action="/update" method="POST">
+                      <input type="hidden" name="_method" value="PUT"> 
                     <div class="input-group mb-3">
                         <input type="text" name="id" class="form-control" placeholder="Enter amount (<%= homeCountry.currencySymbol  %>)">
                         <button class="btn btn-outline-secondary" type="submit" >Search</button>
@@ -61,6 +62,7 @@
                         <option value="country name">Search country</option>
                       </select>
                       <input type="hidden" name="neighbors">
+                      
                     </form>
                 </div>
             </div>
@@ -85,6 +87,7 @@
                 <form action="/swap" method="POST">
                   <input type="hidden" name="index" value="<%= i  %>">
                   <input type="hidden" name="neighbors">
+                  <input type="hidden" name="_method" value="PATCH">
                 </form>
             </div>
 

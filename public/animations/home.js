@@ -1,5 +1,8 @@
 // console.log($(".main button").css("display"));  // block
 
+
+
+
 $("#amount_main").text(formatNumber(homeCountry.conversionRate));
 for (let i = 0; i < neighbors.length; i++) {
 
@@ -18,9 +21,9 @@ $("[id^='card']").on("click", function(event) {
     if (event.target === this.querySelector("button")) {
         return;
     }
-  //  console.log("the form about to be submitted is: " + this.querySelector("form"));
     prepareDeletedCards();
-    this.querySelector("form").submit();
+    const form = this.querySelector("form");
+    form.submit();
         
 });
 
@@ -85,7 +88,7 @@ $(".btn.plus").on("click", function(event) {
 }) 
 
 $(".main select").on("change", function(event) {
-    $(".main input").val("");
+    $(".main input[type='text']").val("");
     if (event.target.value!=="amount") {
         $(".main button").css("display", "block");
         let what = event.target.value;
@@ -100,8 +103,7 @@ $(".main select").on("change", function(event) {
         $(".main input").attr("placeholder", "Enter amount (" + homeCountry.currencySymbol +")");
     }
 
-   // console.log("Main select changed");
-   // console.log("chosen" + event.target.value);
+   
     
    
 })
@@ -118,7 +120,8 @@ $(".new select").on("change", function(event) {
 })
     
 $("form").on("submit", function (event) {
-   const selected = this.querySelector("select").value;
+
+    const selected = this.querySelector("select").value;
    if (selected === "amount") {
     event.preventDefault();
     return;
@@ -131,11 +134,14 @@ $("form").on("submit", function (event) {
     }
     // at this point the form will be submitted, so preparation needs to be done
     prepareDeletedCards();
-    
+
+
 });
 
 
 function prepareDeletedCards() {
+
     $("form input[name='neighbors']").val(JSON.stringify(deletedCards));
+
 
 }
