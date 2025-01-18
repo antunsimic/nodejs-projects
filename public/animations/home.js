@@ -1,6 +1,17 @@
 // console.log($(".main button").css("display"));  // block
+let mainSelect = $(".main select")
+let newSelect = $(".new select")
+let mainInput = $(".main input[type='text']")
+let newInput = $(".new input[type='text']")
 
-
+function checkValidity(input, selected) {
+    if (input.value.length < 2 || input.value.length > 56 ) {
+        input.setCustomValidity("Enter a proper " + selected + "!");
+    }
+    else {
+        input.setCustomValidity("");
+    }
+}
 
 
 $("#amount_main").text(formatNumber(homeCountry.conversionRate));
@@ -27,8 +38,9 @@ $("[id^='card']").on("click", function(event) {
         
 });
 
-$(".main input").on("input", function(event) {
-    if ($(".main select").val() === "amount") {
+mainInput.on("input", function(event) {
+    
+    if (mainSelect.val() === "amount") {
         this.value = allowOnly("numbers", this.value);
        
         $("#amount_main").text(formatNumber(event.target.value));
@@ -41,6 +53,7 @@ $(".main input").on("input", function(event) {
         }
     }
     else {
+        checkValidity(this, mainSelect.val())
         this.value = allowOnly("words", this.value);
 
 
@@ -48,7 +61,8 @@ $(".main input").on("input", function(event) {
 
 });
 
-$(".new input").on("input", function (event) {
+newInput.on("input", function (event) {
+    checkValidity(this, newSelect.val())
     this.value = allowOnly("words", this.value);
 })
 
@@ -87,20 +101,22 @@ $(".btn.plus").on("click", function(event) {
     $(".card.new").css("display", "flex");
 }) 
 
-$(".main select").on("change", function(event) {
-    $(".main input[type='text']").val("");
+mainSelect.on("change", function(event) {
+    mainInput.val("");
+    
     if (event.target.value!=="amount") {
+        checkValidity(mainInput[0], event.target.value)
         $(".main button").css("display", "block");
         let what = event.target.value;
         if (event.target.value==="country name") {
             what = "country"
         }
-        $(".main input").attr("placeholder", "Enter " + what);
+        mainInput.attr("placeholder", "Enter " + what);
 
     }
     else {
         $(".main button").css("display", "none");
-        $(".main input").attr("placeholder", "Enter amount (" + homeCountry.currencySymbol +")");
+        mainInput.attr("placeholder", "Enter amount (" + homeCountry.currencySymbol +")");
     }
 
    
@@ -108,32 +124,32 @@ $(".main select").on("change", function(event) {
    
 })
 
-$(".new select").on("change", function(event) {
-    $(".new input").val("");
+newSelect.on("change", function(event) {
+    newInput.val("");
     let what = event.target.value;
+    checkValidity(newInput[0], what)
     if (event.target.value==="country name") {
         what = "country"
     }
-    $(".new input").attr("placeholder", "Enter " + what)
+    newInput.attr("placeholder", "Enter " + what)
    
    
 })
     
 $("form").on("submit", function (event) {
-
+    event.preventDefault();
     const selected = this.querySelector("select").value;
    if (selected === "amount") {
-    event.preventDefault();
     return;
    }
    const textInput = this.querySelector("input[type='text']");
-    if (textInput.value.length < 2 || textInput.value.length > 56 ) {
-        alert("Enter a proper " + selected + "!");
-        event.preventDefault();
-        return;
+    checkValidity(textInput, selected)
+    
+    if (textInput.reportValidity()) {
+        prepareDeletedCards();
+        this.submit()
     }
-    // at this point the form will be submitted, so preparation needs to be done
-    prepareDeletedCards();
+    
 
 
 });
