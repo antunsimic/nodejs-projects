@@ -449,6 +449,12 @@ res.render("about.ejs", data);
  });
 
 
+ app.use((req, res) => {
+  res.redirect("/");
+});
+
+
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
