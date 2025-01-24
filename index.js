@@ -339,6 +339,7 @@ app.get("/", (req, res, next) => {
 
     }
     
+    //console.log(JSON.stringify(neighbors))
 
     res.render("index.ejs", data);
     
@@ -357,7 +358,7 @@ app.get("/", (req, res, next) => {
 app.put("/update", async (req, res) => {
   
   try {
-    let deletedNeighbors = JSON.parse(req.body.neighbors);
+    let deletedNeighbors = JSON.parse(req.body.deletedNeighbors);
 
 
     neighbors = neighbors.filter((neighbor, index) => !deletedNeighbors.includes(index.toString()));
@@ -383,7 +384,7 @@ app.put("/update", async (req, res) => {
 app.patch("/swap", async (req, res) => {
   
   try {
-    let deletedNeighbors = JSON.parse(req.body.neighbors);
+    let deletedNeighbors = JSON.parse(req.body.deletedNeighbors);
 
     //swap first, then delete, otherwise the index of swapping will no longer be accurate
     const tempCountry = homeCountry;
@@ -416,7 +417,7 @@ app.post("/add", async (req, res) => {
   
   try {
 
-    let deletedNeighbors = JSON.parse(req.body.neighbors);
+    let deletedNeighbors = JSON.parse(req.body.deletedNeighbors);
     neighbors = neighbors.filter((neighbor, index) => !deletedNeighbors.includes(index.toString()));
 
     neighbors.push( await makeCountryFrom(req.body.id, req.body.idType));

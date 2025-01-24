@@ -61,7 +61,7 @@
                         <option value="currency">Search currency</option>
                         <option value="country name">Search country</option>
                       </select>
-                      <input type="hidden" name="neighbors">
+                      <input type="hidden" name="deletedNeighbors">
                       
                     </form>
                 </div>
@@ -86,7 +86,7 @@
                 </div>
                 <form action="/swap" method="POST" class="hidden">
                   <input type="hidden" name="index" value="<%= i  %>">
-                  <input type="hidden" name="neighbors">
+                  <input type="hidden" name="deletedNeighbors">
                   <input type="hidden" name="_method" value="PATCH">
                 </form>
             </div>
@@ -125,7 +125,7 @@
                         <option selected value="currency">Search currency</option>
                         <option value="country name">Search country</option>
                       </select>
-                      <input type="hidden" name="neighbors">
+                      <input type="hidden" name="deletedNeighbors">
                     </form>
                 </div>
             </div>

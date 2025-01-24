@@ -157,7 +157,7 @@ $("form").on("submit", function (event) {
 
 function prepareDeletedCards() {
 
-    $("form input[name='neighbors']").val(JSON.stringify(deletedCards));
+    $("form input[name='deletedNeighbors']").val(JSON.stringify(deletedCards));
 
 
 }
