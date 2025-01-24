@@ -28,15 +28,17 @@ app.use(methodOverride((req, res) => {
 var conversion_rates;
 var lastUpdateRates;
 
-function Country (countryCode, currencyCode, currencyName, currencySymbol, borders=[]) {
-  this.countryCode = countryCode;
-  this.currencyCode = currencyCode;
-  this.currencyName = currencyName;
-  this.currencySymbol = currencySymbol;
-  this.borders = borders;
-  this.conversionRate = conversion_rates[currencyCode];
-}
 
+function countryConstructor (countryCode, currencyCode, currencyName, currencySymbol, borders=[]) {
+  return {
+    countryCode: countryCode,
+    currencyCode: currencyCode,
+    currencyName: currencyName,
+    currencySymbol: currencySymbol,
+    borders: borders,
+    conversionRate: conversion_rates[currencyCode],
+  }
+}
 const globalPlayers = [];
 
 (async () => {
@@ -52,11 +54,11 @@ const globalPlayers = [];
       conversion_rates = response.data.conversion_rates;
       lastUpdateRates = response.data.time_last_update_utc;
       lastUpdateRates = lastUpdateRates.substring(0, lastUpdateRates.lastIndexOf(" "));
-      globalPlayers.push(new Country("us", "USD", "United States dollar", "$"));
-      globalPlayers.push(new Country("eu", "EUR", "Euro", "€"));
-      globalPlayers.push(new Country("jp", "JPY", "Japanese yen", "¥"));
-      globalPlayers.push(new Country("gb", "GBP", "British pound", "£"));
-      globalPlayers.push(new Country("cn", "CNY", "Chinese yuan", "¥"));
+      globalPlayers.push(countryConstructor("us", "USD", "United States dollar", "$"));
+      globalPlayers.push(countryConstructor("eu", "EUR", "Euro", "€"));
+      globalPlayers.push(countryConstructor("jp", "JPY", "Japanese yen", "¥"));
+      globalPlayers.push(countryConstructor("gb", "GBP", "British pound", "£"));
+      globalPlayers.push(countryConstructor("cn", "CNY", "Chinese yuan", "¥"));
       return; // Return the fetched data
     } catch (error) {
       attempts++;
@@ -79,8 +81,6 @@ const globalPlayers = [];
 
 
 
-var neighbors = [];
-var homeCountry;
 
 function fixEdgeCases(id, idType) {
   const edgeCases = ["ireland", "china", "korea", "america", "guinea", "samoa", "georgia"];
@@ -128,7 +128,7 @@ async function makeCountryFrom(id, idType) {
       const borders = country[0].borders;
       const currencyName = country[0].currencies[currencyCode].name;
       const currencySymbol = country[0].currencies[currencyCode].symbol;
-      return new Country(countryCode, currencyCode, currencyName, currencySymbol, borders );
+      return countryConstructor(countryCode, currencyCode, currencyName, currencySymbol, borders );
     }
     else if (idType==="country name") {
       const response = await axios.get("https://restcountries.com/v3.1/name/"+id);
@@ -138,7 +138,7 @@ async function makeCountryFrom(id, idType) {
       const borders = country[0].borders;
       const currencyName = country[0].currencies[currencyCode].name;
       const currencySymbol = country[0].currencies[currencyCode].symbol;
-      return new Country(countryCode, currencyCode, currencyName, currencySymbol, borders );
+      return countryConstructor(countryCode, currencyCode, currencyName, currencySymbol, borders );
     } else if (idType==="currency") {
       const response = await axios.get("https://restcountries.com/v3.1/currency/"+id);
       const country = response.data;
@@ -150,7 +150,7 @@ async function makeCountryFrom(id, idType) {
       const borders = country[0].borders;
       const currencyName = country[0].currencies[currencyCode].name;
       const currencySymbol = country[0].currencies[currencyCode].symbol;
-      return new Country(countryCode, currencyCode, currencyName, currencySymbol, borders );
+      return countryConstructor(countryCode, currencyCode, currencyName, currencySymbol, borders );
     }
   } catch (error) {
     console.error("Failed to make request:", error.message);
@@ -317,7 +317,7 @@ app.get("/", (req, res, next) => {
    // let response = await axios.get("https://api.country.is/");
     let countryCode = response.data.country.toLowerCase(); // actual user's country, e.g. Croatia
 
-     homeCountry = await makeCountryFrom(countryCode, "country code");
+    let homeCountry = await makeCountryFrom(countryCode, "country code");
     //console.log(homeCountry.countryCode);
 
     //getting countries that share the same currency
@@ -329,7 +329,7 @@ app.get("/", (req, res, next) => {
     }
     //console.log(countriesWithSharedCurrency);
    
-    neighbors = await deduceNeighbors(homeCountry.currencyCode, shuffleArray(homeCountry.borders), countriesWithSharedCurrency); //neighbors of user's actual country are sent
+   let neighbors = await deduceNeighbors(homeCountry.currencyCode, shuffleArray(homeCountry.borders), countriesWithSharedCurrency); //neighbors of user's actual country are sent
     
     //console.log(neighbors);
 
@@ -339,7 +339,7 @@ app.get("/", (req, res, next) => {
 
     }
     
-    //console.log(JSON.stringify(neighbors))
+    //console.log(homeCountry)
 
     res.render("index.ejs", data);
     
@@ -359,11 +359,15 @@ app.put("/update", async (req, res) => {
   
   try {
     let deletedNeighbors = JSON.parse(req.body.deletedNeighbors);
-
-
+/*
+    let neighbors2 = JSON.parse(req.body.neighbors)
+    console.log("route is update. neighbors:")
+    console.log(neighbors2)
+*/
+    let neighbors = JSON.parse(req.body.neighbors)
     neighbors = neighbors.filter((neighbor, index) => !deletedNeighbors.includes(index.toString()));
 
-    homeCountry = await makeCountryFrom(req.body.id, req.body.idType);
+   let homeCountry = await makeCountryFrom(req.body.id, req.body.idType);
     const data = {
       homeCountry: homeCountry,
       neighbors: neighbors,
@@ -385,8 +389,15 @@ app.patch("/swap", async (req, res) => {
   
   try {
     let deletedNeighbors = JSON.parse(req.body.deletedNeighbors);
+/*
+    let neighbors2 = JSON.parse(req.body.neighbors)
+    let homeCountry2 = JSON.parse(req.body.homeCountry)
+    console.log("route is swap. home country")
+    console.log(homeCountry2)  */
 
     //swap first, then delete, otherwise the index of swapping will no longer be accurate
+    let homeCountry = JSON.parse(req.body.homeCountry);
+    let neighbors = JSON.parse(req.body.neighbors);
     const tempCountry = homeCountry;
     homeCountry = neighbors[Number(req.body.index)];
     neighbors[Number(req.body.index)] = tempCountry;
@@ -418,6 +429,11 @@ app.post("/add", async (req, res) => {
   try {
 
     let deletedNeighbors = JSON.parse(req.body.deletedNeighbors);
+
+    let neighbors = JSON.parse(req.body.neighbors)
+    let homeCountry = JSON.parse(req.body.homeCountry)
+ 
+
     neighbors = neighbors.filter((neighbor, index) => !deletedNeighbors.includes(index.toString()));
 
     neighbors.push( await makeCountryFrom(req.body.id, req.body.idType));

@@ -14,8 +14,8 @@
 <body>
 
     <script>
-    const homeCountry = JSON.parse(`<%- JSON.stringify(homeCountry) %>`);
-    const neighbors = JSON.parse(`<%- JSON.stringify(neighbors) %>`);
+    const homeCountry = JSON.parse('<%- JSON.stringify(homeCountry) %>');
+    const neighbors = JSON.parse('<%- JSON.stringify(neighbors) %>');
         
       
     </script>
@@ -62,6 +62,7 @@
                         <option value="country name">Search country</option>
                       </select>
                       <input type="hidden" name="deletedNeighbors">
+                      <input type="hidden" name="neighbors" value='<%- JSON.stringify(neighbors) %>'>
                       
                     </form>
                 </div>
@@ -88,6 +89,8 @@
                   <input type="hidden" name="index" value="<%= i  %>">
                   <input type="hidden" name="deletedNeighbors">
                   <input type="hidden" name="_method" value="PATCH">
+                  <input type="hidden" name="homeCountry" value='<%- JSON.stringify(homeCountry) %>'>
+                  <input type="hidden" name="neighbors" value='<%- JSON.stringify(neighbors) %>'>
                 </form>
             </div>
 
@@ -126,6 +129,8 @@
                         <option value="country name">Search country</option>
                       </select>
                       <input type="hidden" name="deletedNeighbors">
+                      <input type="hidden" name="homeCountry" value='<%- JSON.stringify(homeCountry) %>'>
+                      <input type="hidden" name="neighbors" value='<%- JSON.stringify(neighbors) %>'>
                     </form>
                 </div>
             </div>
