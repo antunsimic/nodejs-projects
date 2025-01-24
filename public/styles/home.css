@@ -11,9 +11,6 @@
 }
 
 
-.card.new, .main button {
-    display: none;
-}
 
 body {
     background-image: url("/images/money.jpg");
@@ -42,6 +39,7 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  /* Slightly stronger shadow */
   }
 
-  form[action="/swap"] {
+
+  .hidden {
     display: none;
   }
