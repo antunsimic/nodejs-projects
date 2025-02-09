@@ -356,6 +356,10 @@ app.get("/", (req, res, next) => {
 
 });
 
+app.get("/health", (req, res) => {
+  res.send("OK");
+});
+
 
 app.put("/update", async (req, res) => {
   
