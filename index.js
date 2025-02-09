@@ -41,7 +41,7 @@ function countryConstructor (countryCode, currencyCode, currencyName, currencySy
 }
 const globalPlayers = [];
 
-(async () => {
+async function getExchangeRates()  {
 
   let attempts = 0;
   let maxRetries = 3;
@@ -74,7 +74,7 @@ const globalPlayers = [];
     }
   }
 
-})();
+}
 
 
 
@@ -283,6 +283,7 @@ app.get("/", (req, res, next) => {
   req.clientIP = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   next();
 }, async (req, res) => {
+  await getExchangeRates();
   
   try {
     // figuring out where the user is from
