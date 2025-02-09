@@ -317,7 +317,8 @@ app.get("/", (req, res, next) => {
    // let response = await axios.get("https://api.country.is/");
     let countryCode = response.data.country.toLowerCase(); // actual user's country, e.g. Croatia
 
-    let homeCountry = await makeCountryFrom(countryCode, "country code");
+    let homeCountry = (await makeCountryFrom(countryCode, "country code")) || globalPlayers[0];
+
     //console.log(homeCountry.countryCode);
 
     //getting countries that share the same currency
