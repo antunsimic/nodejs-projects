@@ -2,6 +2,7 @@ import express from "express";
 import 'dotenv/config'
 import methodOverride from "method-override";
 import currencyExchange from "./routes/currencyExchange.js"; // Import the specialized route
+import stickyNotes from "./routes/stickyNotes.js";
 
 const app = express();
 
@@ -23,9 +24,10 @@ app.use(methodOverride((req, res) => {
 }));
 
 app.use("/currencyExchange", currencyExchange);
+app.use("/stickyNotes", stickyNotes);
 
 app.get("/",  (req, res) => {
-  res.redirect("/currencyExchange")
+  res.redirect("https://antunsimic.github.io/resume/")
     
  });
 
