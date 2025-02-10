@@ -15,7 +15,7 @@ const saltRounds = 10;
 
 
 let address = "https://antun-nodejs-d8745ba6f78d.herokuapp.com/stickyNotes";
-if (process.env.SN_PORT == null || process.env.SN_PORT == "") {
+if (process.env.PORT == null || process.env.SN_PORT == "") {
   address = "http://localhost:3000/stickyNotes";
 }
 
