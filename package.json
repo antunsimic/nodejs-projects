@@ -1,5 +1,5 @@
 {
-  "name": "Currency Exchange",
+  "name": "NodeJS projects",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -24,7 +24,9 @@
     "passport-github2": "^0.1.12",
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "cors": "^2.8.5",
+    "express-rate-limit": "^7.5.0"
 
   },
   "engines": {

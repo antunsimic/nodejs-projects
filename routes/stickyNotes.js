@@ -3,14 +3,14 @@ import pg from "pg";
 import session from "express-session";
 import PgSession from "connect-pg-simple";
 import passport from "passport";
-import env from "dotenv";
 import bcrypt from "bcrypt";
 import GoogleStrategy from "passport-google-oauth2";
 import GitHubStrategy from "passport-github2";
 
+
+
 const router = express.Router();
 
-env.config();
 const saltRounds = 10;
 
 

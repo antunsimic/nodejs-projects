@@ -1,10 +1,12 @@
 import express from "express";
-import 'dotenv/config'
+import "dotenv/config";
 import methodOverride from "method-override";
 import currencyExchange from "./routes/currencyExchange.js"; // Import the specialized route
 import stickyNotes from "./routes/stickyNotes.js";
+import movieBackend from "./routes/movieBackend.js";
 
 const app = express();
+
 
 let port = process.env.PORT;
 if (port == null || port == "") {
@@ -25,6 +27,7 @@ app.use(methodOverride((req, res) => {
 
 app.use("/currencyExchange", currencyExchange);
 app.use("/stickyNotes", stickyNotes);
+app.use("/movieBackend", movieBackend);
 
 app.get("/",  (req, res) => {
   res.redirect("https://antunsimic.github.io/resume/")
