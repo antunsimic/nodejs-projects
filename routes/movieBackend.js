@@ -21,7 +21,7 @@ const movieRateLimiter = rateLimit({
 router.use('/movie', movieRateLimiter)
 
 
-const allowedOrigins = ['http://localhost:5174', "https://movie-recommendation-by-antun.vercel.app"]; // Add all allowed frontends
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', "https://movie-recommendation-by-antun.vercel.app"]; // Add all allowed frontends
 const corsOptions = {
   origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
@@ -49,7 +49,7 @@ function getRandom1To(max) {
 
 
 async function getMovie(country, prominence, christmas) {
-  const lower = country.population
+  const lower = Math.min(country.population, 300) 
   let vote_greater; 
   let vote_lower = 100000000;;
   if (country.population * 3 < 100) {
@@ -63,7 +63,7 @@ async function getMovie(country, prominence, christmas) {
     
   } else {
     //big country
-    const upper = Math.min(country.population * 3, 2000)
+    const upper = Math.min(country.population * 3, 1000)
     vote_greater = upper;
     if (prominence === "Hidden Gem") {
       vote_greater = lower;
