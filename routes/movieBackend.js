@@ -21,7 +21,7 @@ const movieRateLimiter = rateLimit({
 router.use('/movie', movieRateLimiter)
 
 
-const allowedOrigins = ['http://localhost:5173', "https://movie-recommendation-by-antun.vercel.app"]; // Add all allowed frontends
+const allowedOrigins = ['http://localhost:5174', "https://movie-recommendation-by-antun.vercel.app"]; // Add all allowed frontends
 const corsOptions = {
   origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
