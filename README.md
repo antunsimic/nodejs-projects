@@ -1,33 +1,31 @@
-# Currency Exchange
+# NodeJS Projects
 
-## Description
+This repository contains various NodeJS projects developed by Antun Simić. Each project is designed to demonstrate different aspects of NodeJS, Express, and other related technologies. Below is a brief overview of the projects included in this repository.
 
-_Currency Exchange_ is a web-based application that allows users to view and convert currency exchange rates. It provides real-time exchange rates for various currencies and displays information about different countries and their currencies. The app also allows users to add and remove neighboring countries to compare their exchange rates.
+## Projects
 
-## Features
+### 1. StickyNotes
+StickyNotes is a web application that allows users to create, edit, and manage notes. It supports user authentication via Google and GitHub, and provides both private and public visibility options for notes.
 
-- **Real-time Exchange Rates**: Fetches the latest exchange rates from the ExchangeRate-API.
-- **Country Information**: Displays detailed information about countries, including their currency codes, names, symbols, and borders.
-- **Currency Conversion**: Allows users to input an amount and convert it to different currencies.
-- **Add/Remove Neighbors**: Users can add or remove neighboring countries to compare their exchange rates.
-- **Responsive Design**: The app is designed to be responsive and works well on both desktop and mobile devices.
+For more details, please refer to the StickyNotes README.
 
-## Technologies Used
+### 2. CurrencyExchange
+CurrencyExchange is a web-based application that allows users to view and convert currency exchange rates. It provides real-time exchange rates for various currencies and displays information about different countries and their currencies.
 
-- **Node.js**: Backend runtime environment.
-- **Express.js**: Web framework for Node.js.
-- **EJS**: Templating engine for rendering HTML pages.
-- **Axios**: Promise-based HTTP client for making API requests.
-- **Bootstrap**: Frontend framework for responsive design.
-- **JavaScript**: Programming language for frontend and backend logic.
-- **CSS**: Styling for the web pages.
+For more details, please refer to the CurrencyExchange README.
+
+### 3. MovieBackend
+MovieBackend is an API that provides movie recommendations based on the user's country and other criteria. It uses the TMDB API to fetch movie data and supports rate limiting and CORS.
+
+### 4. Additional Projects
+This repository may contain additional projects that demonstrate various NodeJS and Express functionalities. Each project is contained within its own directory and includes the necessary code and configuration files.
 
 ## Setup and Installation
 
 1. **Clone the repository**:
    ```sh
-   git clone https://github.com/antunsimic/currency-exchange.git
-   cd currency-exchange
+   git clone https://github.com/antunsimic/nodejs-projects.git
+   cd nodejs-projects
    ```
 
 2. **Install dependencies**:
@@ -35,9 +33,23 @@ _Currency Exchange_ is a web-based application that allows users to view and con
    npm install
    ```
 
-3. **Create a .env file** and add your API key:
+3. **Create a .env file** and add your environment variables:
+   ```sh
+   touch .env
    ```
-   API_KEY=your_api_key_here
+
+   Add the following variables to the .env file:
+   ```
+   PORT=3000
+   SN_DATABASE_USER=your_database_user
+   SN_DATABASE_PASSWORD=your_database_password
+   SN_SESSION_KEY=your_session_key
+   SN_GOOGLE_CLIENT_ID=your_google_client_id
+   SN_GOOGLE_CLIENT_SECRET=your_google_client_secret
+   SN_GITHUB_CLIENT_ID=your_github_client_id
+   SN_GITHUB_CLIENT_SECRET=your_github_client_secret
+   CE_API_KEY=your_currency_exchange_api_key
+   MR_TOKEN=your_movie_recommendation_api_token
    ```
 
 4. **Start the server**:
@@ -46,35 +58,6 @@ _Currency Exchange_ is a web-based application that allows users to view and con
    ```
 
 5. **Open your browser** and navigate to `http://localhost:3000`.
-
-## Deployment
-
-To deploy the app on Heroku, follow these steps:
-
-1. **Login to Heroku**:
-   ```sh
-   heroku login
-   ```
-
-2. **Create a new Heroku app**:
-   ```sh
-   heroku create your-app-name
-   ```
-
-3. **Push the code to Heroku**:
-   ```sh
-   git push heroku main
-   ```
-
-4. **Set the environment variable**:
-   ```sh
-   heroku config:set API_KEY=your_api_key_here
-   ```
-
-5. **Open the app**:
-   ```sh
-   heroku open
-   ```
 
 ## License
 
@@ -86,9 +69,14 @@ Antun Simić
 
 ## Acknowledgements
 
-- [ExchangeRate-API](https://www.exchangerate-api.com/)
-- [Country API](https://country.is/)
-- [REST Countries](https://restcountries.com/)
+- [Express](https://expressjs.com/)
+- [Axios](https://axios-http.com/)
 - [Bootstrap](https://getbootstrap.com/)
+- [Passport](http://www.passportjs.org/)
+- [TMDB API](https://www.themoviedb.org/documentation/api)
+- [ExchangeRate-API](https://www.exchangerate-api.com/)
+- [REST Countries](https://restcountries.com/)
 - [Flag Icons](https://github.com/lipis/flag-icons)
-- [Unsplash](https://unsplash.com/) for the background image.
+- [Unsplash](https://unsplash.com/) for background images
+
+For more details on individual projects, please refer to their respective README files.
