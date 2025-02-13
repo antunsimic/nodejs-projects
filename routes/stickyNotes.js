@@ -115,6 +115,7 @@ if (req.isAuthenticated()) {
    // console.log(notes);
   const data = {
     notes: notes,
+    title: "Home - Sticky Notes"
     };
   
     res.render("stickyNotes/home.ejs", data);
@@ -131,7 +132,7 @@ else {
 });
 
 router.get("/about", (req, res) => {
-  res.render("stickyNotes/about.ejs")
+  res.render("stickyNotes/about.ejs", { title: "About - Sticky Notes"})
 })
 
 router.get("/login", async (req, res) => {
@@ -153,7 +154,8 @@ router.get("/login", async (req, res) => {
      } 
 
     res.render("stickyNotes/login.ejs", {
-      error: error
+      error: error,
+      title: "Log in - Sticky Notes"
     });
   }
 
@@ -179,7 +181,7 @@ router.post("/upload", async (req, res) => {
      
   }
   else {
-    res.status(401).render("stickyNotes/error.ejs", {errorMessage: "401 - Unauthorized"});
+    res.status(401).render("stickyNotes/error.ejs", {errorMessage: "401 - Unauthorized", title: "Error - Sticky Notes"});
   }
 
     
@@ -207,7 +209,8 @@ router.post("/register", async (req, res) => {
     if (checkResult.rows.length > 0) {
       
       res.render("stickyNotes/login.ejs", {
-        error: "User already exists"
+        error: "User already exists",
+        title: "Log in - Sticky Notes"
       });
     } else {
       //hashing the password and saving it in the database
@@ -226,7 +229,9 @@ router.post("/register", async (req, res) => {
             if (err) {
               console.error("Error logging in after registration:", err);
               res.render("stickyNotes/login.ejs", {
-                  error: "An error occurred during login after registration"
+                  error: "An error occurred during login after registration",
+                  title: "Log in - Sticky Notes"
+
               });
           } else {
               res.redirect("/stickyNotes");
@@ -256,7 +261,9 @@ router.post("/login", async (req, res) => {
       if (numberOfAttempts > 5) {
         
         res.render("stickyNotes/login.ejs", {
-          error: "Too many login attempts. Try again later"
+          error: "Too many login attempts. Try again later",
+          title: "Log in - Sticky Notes"
+
         });
         return;
       } 
@@ -281,7 +288,9 @@ router.post("/login", async (req, res) => {
               if (err) {
                 console.error("Error logging in: ", err)
                 res.render("stickyNotes/login.ejs", {
-                  error: "An error occurred during login"
+                  error: "An error occurred during login",
+                  title: "Log in - Sticky Notes"
+
                 });
               } else {
                   res.redirect("/stickyNotes")
@@ -301,7 +310,9 @@ router.post("/login", async (req, res) => {
               
   
               res.render("stickyNotes/login.ejs", {
-                error: "Wrong username or password"
+                error: "Wrong username or password",
+                title: "Log in - Sticky Notes"
+
               });
  
             
@@ -311,7 +322,9 @@ router.post("/login", async (req, res) => {
     } else {
       
       res.render("stickyNotes/login.ejs", {
-        error: "User not found"
+        error: "User not found",
+        title: "Log in - Sticky Notes"
+
       });
     }
   } catch (err) {
@@ -340,7 +353,7 @@ router.get("/logout", (req, res) => {
 router.get("/new", (req, res) => {
   
   if (req.isAuthenticated()) {
-    res.render("stickyNotes/new.ejs");
+    res.render("stickyNotes/new.ejs", { title: "New note - Sticky Notes" });
   }
   else {
     res.redirect("/stickyNotes/login");
@@ -358,17 +371,17 @@ router.get("/note", async (req, res) => {
     const dbRes = await db.query("SELECT * FROM sn_notes WHERE id = $1", [req.query.id]);
     const note = dbRes.rows[0];
     if (typeof note === "undefined") {
-      res.status(404).render("stickyNotes/error.ejs", {errorMessage: "404 - Not Found"}); 
+      res.status(404).render("stickyNotes/error.ejs", {errorMessage: "404 - Not Found", title: "Error - Sticky Notes"}); 
       return;
     }
     const logged_in = req.isAuthenticated()
     if (note.visibility === "Private") {
       if (!logged_in) {
-        res.status(401).render("stickyNotes/error.ejs", {errorMessage: "401 - Unauthorized"}); 
+        res.status(401).render("stickyNotes/error.ejs", {errorMessage: "401 - Unauthorized", title: "Error - Sticky Notes"}); 
         return;
       }
       if (req.user.id !== note.user_id) {
-        res.status(403).render("stickyNotes/error.ejs", {errorMessage: "403 - Forbidden"}); 
+        res.status(403).render("stickyNotes/error.ejs", {errorMessage: "403 - Forbidden", title: "Error - Sticky Notes"}); 
         return;
       }
     }
@@ -379,7 +392,8 @@ router.get("/note", async (req, res) => {
     const data = {
       note: note,
       owns: owns,
-      logged_in: logged_in
+      logged_in: logged_in,
+      title: note.title + " - Sticky Notes"
       };
       res.render("stickyNotes/note.ejs", data);
     } catch (err) {
@@ -525,7 +539,7 @@ passport.use("github", new GitHubStrategy({
 router.use((req, res) => {
  
  // res.redirect("/")
-    res.status(404).render("stickyNotes/error.ejs", {errorMessage: "404 - Not Found"}); // Using EJS for templating
+    res.status(404).render("stickyNotes/error.ejs", {errorMessage: "404 - Not Found", title: "Error - Sticky Notes"}); // Using EJS for templating
  
 });
 

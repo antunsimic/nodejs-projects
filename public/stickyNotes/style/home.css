@@ -8,12 +8,12 @@ header > div {
 }
 
 
-.btn-dark {
+#Home .btn-dark {
     height: 5rem;
     width: 5rem;
 }
 
-svg {
+#Home svg {
     position: relative;
     top: 12px;
 }

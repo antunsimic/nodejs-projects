@@ -1,7 +1,7 @@
 
 
 
-$("button[type='submit']").on('click', function(event) {
+$(".note button[type='submit']").on('click', function(event) {
 
     event.preventDefault();
     let content = $("textarea");

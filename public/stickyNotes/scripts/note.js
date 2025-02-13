@@ -75,4 +75,4 @@ $("#EditView").on("change", function (event) {
 
 })
 
-$("button[type='submit']").on('click', update)
+$(".note button[type='submit']").on('click', update)
