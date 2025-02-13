@@ -320,6 +320,7 @@ router.get("/", (req, res, next) => {
     const data = {
       homeCountry: homeCountry,
       neighbors: neighbors,
+      title: "Currency Exchange"
 
     }
     
@@ -353,11 +354,12 @@ router.put("/update", async (req, res) => {
     neighbors = neighbors.filter((neighbor, index) => !deletedNeighbors.includes(index.toString()));
 
    let homeCountry = await makeCountryFrom(req.body.id, req.body.idType);
-    const data = {
-      homeCountry: homeCountry,
-      neighbors: neighbors,
+   const data = {
+    homeCountry: homeCountry,
+    neighbors: neighbors,
+    title: "Currency Exchange"
 
-    }
+  }
     res.render("currencyExchange/index.ejs", data);
     
   } catch (error) {
@@ -389,10 +391,10 @@ router.patch("/swap", async (req, res) => {
     
     neighbors = neighbors.filter((neighbor, index) => !deletedNeighbors.includes(index.toString()));
 
-
     const data = {
       homeCountry: homeCountry,
       neighbors: neighbors,
+      title: "Currency Exchange"
 
     }
     res.render("currencyExchange/index.ejs", data);
@@ -425,8 +427,8 @@ router.post("/add", async (req, res) => {
     const data = {
       homeCountry: homeCountry,
       neighbors: neighbors,
+      title: "Currency Exchange"
 
-      
     }
     res.render("currencyExchange/index.ejs", data);
     
@@ -445,6 +447,7 @@ router.post("/add", async (req, res) => {
 router.get("/about",  (req, res) => {
   const data = {
     lastUpdate: lastUpdateRates,
+    title: "About - Currency Exchange"
   }
 res.render("currencyExchange/about.ejs", data);
     
