@@ -332,6 +332,9 @@ router.get("/", (req, res, next) => {
     console.error("Failed to make request:", error.message);
     res.render("currencyExchange/index.ejs", {
       error: error.message,
+      homeCountry: globalPlayers[0],
+      neighbors: globalPlayers.slice(1),
+      title: "Currency Exchange"
     });
   }
 
@@ -366,6 +369,9 @@ router.put("/update", async (req, res) => {
     console.error("Failed to make request:", error.message);
     res.render("currencyExchange/index.ejs", {
       error: error.message,
+      homeCountry: globalPlayers[0],
+      neighbors: globalPlayers.slice(1),
+      title: "Currency Exchange"
     });
   }
 
@@ -403,6 +409,9 @@ router.patch("/swap", async (req, res) => {
     console.error("Failed to make request:", error.message);
     res.render("currencyExchange/index.ejs", {
       error: error.message,
+      homeCountry: globalPlayers[0],
+      neighbors: globalPlayers.slice(1),
+      title: "Currency Exchange"
     });
   }
 
@@ -436,6 +445,9 @@ router.post("/add", async (req, res) => {
     console.error("Failed to make request:", error.message);
     res.render("currencyExchange/index.ejs", {
       error: error.message,
+      homeCountry: globalPlayers[0],
+      neighbors: globalPlayers.slice(1),
+      title: "Currency Exchange"
     });
   }
 
