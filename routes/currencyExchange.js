@@ -135,7 +135,7 @@ async function makeCountryFrom(id, idType) {
       return countryConstructor(countryCode, currencyCode, currencyName, currencySymbol, borders );
     }
   } catch (error) {
-    console.error("Failed to make request:", error.message);
+    console.error("Failed to make request to restcountries:", error.message);
     // choosing random global player instead
     
     var index = Math.random();

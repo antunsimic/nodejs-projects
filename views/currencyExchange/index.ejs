@@ -26,7 +26,7 @@
                     <span class="fi fi-<%= homeCountry.countryCode  %>"></span>
                     </h5>
                     <h2 class="card-text"> <span id="amount_main"> <%= homeCountry.conversionRate  %></span> <%= homeCountry.currencySymbol  %></h2>
-                    <form action="/currencyExchange/update" method="POST" class="textual">
+                    <form action="/update" method="POST" class="textual">
                       <input type="hidden" name="_method" value="PUT"> 
                     <div class="input-group mb-3">
                         <input type="text" name="id" class="form-control" placeholder="Enter amount (<%= homeCountry.currencySymbol  %>)">
@@ -61,7 +61,7 @@
                     <h2 class="card-text"> <span id="amount_<%= i  %>"><%= neighbors[i].conversionRate  %></span> <%= neighbors[i].currencySymbol  %></h2>
                     
                 </div>
-                <form action="/currencyExchange/swap" method="POST" class="hidden">
+                <form action="/swap" method="POST" class="hidden">
                   <input type="hidden" name="index" value="<%= i  %>">
                   <input type="hidden" name="deletedNeighbors">
                   <input type="hidden" name="_method" value="PATCH">
@@ -94,7 +94,7 @@
             <div class="new card hidden" style="width: 21rem;">
                 <div class="card-body">
                  
-                    <form action="/currencyExchange/add" method="POST" class="textual">
+                    <form action="/add" method="POST" class="textual">
                     <div class="input-group mb-3">
                         <input name="id" type="text" class="form-control" placeholder="Enter currency"  aria-describedby="button-addon2">
                         <button class="btn btn-outline-secondary" type="submit" >Search</button>

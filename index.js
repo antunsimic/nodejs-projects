@@ -25,10 +25,11 @@ app.use(methodOverride((req, res) => {
 
 }));
 
-app.use("/currencyExchange", currencyExchange);
+app.use("/", currencyExchange);
 app.use("/stickyNotes", stickyNotes);
 app.use("/movieBackend", movieBackend);
 
+/*
 app.get("/",  (req, res) => {
   res.redirect("https://antunsimic.github.io/resume/")
     
@@ -39,7 +40,7 @@ app.get("/",  (req, res) => {
   res.redirect("/");
 });
 
-
+*/
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
